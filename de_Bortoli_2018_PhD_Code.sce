@@ -16,7 +16,7 @@ end
 nb_voies = 2; //Paramètre //Ici l'utilisateur indique le nombre de voies de son tronçon. Sur RD de voies < 3.5m, on entre 0
 longueur = 10.54; //Paramètre // Ici l'utilisateur indique la longueur de son tronçon en km
 //Charger les données d'IRI et les nommer
-FichierIRI = readxls('C:\Users\anne.de-bortoli\Dropbox\LVMT\Rédaction\Partie 3\Calculs_Etude_Cas\Donnees\A81_Troncon1_Donnees_VECTRA_IRI.xls');//associe le fichier avec chemin (voir "propriétés" du tableur) et le nomme. Attention, format XLS2003 ou antérieur pris en charge
+FichierIRI = readxls('C:Pathway.xls');//associe le fichier avec chemin (voir "propriétés" du tableur) et le nomme. Attention, format XLS2003 ou antérieur pris en charge
 FeuilleIRI=FichierIRI(1);//Pointe sur la feuille 1
 ValeursIRI=FeuilleIRI.value; //Récupère les données numériques
 //Créer les vecteurs de localisation et d'IRI bi-trace et moyennés
@@ -68,7 +68,7 @@ DVS=DVS_scenario(calcul_scenario);
 //Calcul la matrice d'évolution d'IRI(t) selon le moment de resurfaçage tR, (on considère ici que l'impact du resurfaçage ne dépend pas de la technique(or épaisseur BBTM inférieure donc effet différent)), avec t de 1 à 50, par pas de 1 an
 Pente_IRI_annuelle=0.05; //peut varier, choix arbitraire selon étude biblio, serait intéressant de faire un travail stat sur données réelles
 a_resurf=0.3; //adaptation de Wang et al 2013 pour l'effet d'un resurfaçage avec revêtement américain entre 3cm et 7.5cm d'épaisseur
-b_resurf=0.15;  //adaptation de Wang et al 2013, étude XLS/IRI A81
+b_resurf=0.15;  //adaptation de Wang et al 2013, étude XLS/IRI Pathway
 IRI(:,1) = a_resurf*IRI0+b_resurf+0.5*Pente_IRI_annuelle;//au lieu d'approximer l'état de surface de l'année 1 à celui juste après resurfaçage, on calcule la moyenne de l'état de surface sur l'année 1
 //Calcul de la matrice d'IRI en scénario S1 IRI_S1
 for j = 2:DVT_chaussee,
@@ -267,7 +267,7 @@ FCE_PPL_RA=SCE_PPL_RA(IRI); //id
 FCE_GPL_RA=SCE_GPL_RA(IRI); //id
 
 //calcul de la matrice de consommation de carburant en g par type de véhicule (VP, VUL, PPL, GPL), par type de carburant et par sous-tronçon (lignes)et sur un jour par an (colonnes)
-IRImoy_RA=0.77;//on le prend égal à l'IRI moyen de toute l'A81 et on considère qu'il est fixe au cours du temps, ce qui n'est probablement pas vrai (selon politiques d'investissement)
+IRImoy_RA=0.77;//on le prend égal à l'IRI moyen de toute l'autoroute étudiée et on considère qu'il est fixe au cours du temps, ce qui n'est probablement pas vrai (selon politiques d'investissement)
 for j=1:DVT_chaussee,
     CC_VP_diesel_RA(:,j) = C_VP_diesel_moy_RA(j)/SCE_VP_RA(IRImoy_RA)*10/1000*TMJA(j)*%VP*FCE_VP_RA(:,j);//on reprend la formule cahier algo : C(IRI)=SC(IRI)*Cmoy(année)/SC(IRImoy)
     CC_VP_essence_RA(:,j) = C_VP_essence_moy_RA(j)/SCE_VP_RA(IRImoy_RA)*10/1000*TMJA(j)*%VP*FCE_VP_RA(:,j);//
